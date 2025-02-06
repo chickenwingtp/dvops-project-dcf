@@ -28,10 +28,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
-      
+        run: |
+          npm install
+          npm install --save-dev @types/express-status-monitor
+        
       - name: Build backend
-        run: npm run build
+        run: |
+          npm run build || (echo "Build failed" && npm run build --verbose && exit 1)
 
       # Start Docker Compose services
       - name: Start services with Docker Compose
