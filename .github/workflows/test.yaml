@@ -28,17 +28,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm install
-          npm install --save-dev @types/winston @types/express-status-monitor
-        
+        run: npm install
+      
       - name: Build backend
-        run: |
-          echo "TypeScript version:"
-          npx tsc --version
-          echo "Files to be compiled:"
-          npx tsc --listFiles
-          npm run build || (echo "Build failed with error code $?" && npm run build --verbose && exit 1)
+        run: npm run build
 
       # Start Docker Compose services
       - name: Start services with Docker Compose
