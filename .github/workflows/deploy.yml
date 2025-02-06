@@ -42,3 +42,5 @@ jobs:
             -e PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }} \
             ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest \
             pm2 link ${{ secrets.PM2_PUBLIC_KEY }} ${{ secrets.PM2_PRIVATE_KEY }}
+
+#test
