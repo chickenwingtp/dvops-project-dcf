@@ -32,9 +32,6 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            PM2_PUBLIC_KEY=${{ secrets.PM2_PUBLIC_KEY }}
-            PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }}
       - name: Verify PM2 Connection
         run: |
           docker run -d --name pm2-app \
