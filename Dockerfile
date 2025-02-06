@@ -25,4 +25,4 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3000/status || exit 1
 
 # Update CMD to use correct PM2 linking order
-CMD ["sh", "-c", "pm2 link ${PM2_PRIVATE_KEY} ${PM2_PUBLIC_KEY} && pm2-runtime start ecosystem.config.cjs"]
+CMD ["sh", "-c", "pm2 link 8nnq1gobty5fv33 li58btqtkcia788 && pm2-runtime start ecosystem.config.cjs"]

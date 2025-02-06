@@ -54,4 +54,4 @@ jobs:
           docker logs pm2-app
           
           # Verify PM2 connection explicitly
-          docker exec pm2-app sh -c 'pm2 link ${PM2_PRIVATE_KEY} ${PM2_PUBLIC_KEY}'
+          docker exec pm2-app sh -c 'pm2 link 8nnq1gobty5fv33 li58btqtkcia788'
