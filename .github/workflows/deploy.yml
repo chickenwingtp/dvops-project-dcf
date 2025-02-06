@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: Deploy Devops Project
     runs-on: ubuntu-latest
+    env:
+      PM2_PUBLIC_KEY: ${{ secrets.PM2_PUBLIC_KEY }}
+      PM2_PRIVATE_KEY: ${{ secrets.PM2_PRIVATE_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,3 +35,10 @@ jobs:
           build-args: |
             PM2_PUBLIC_KEY=${{ secrets.PM2_PUBLIC_KEY }}
             PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }}
+      - name: Verify PM2 Connection
+        run: |
+          docker run --rm \
+            -e PM2_PUBLIC_KEY=${{ secrets.PM2_PUBLIC_KEY }} \
+            -e PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }} \
+            ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest \
+            pm2 link ${{ secrets.PM2_PUBLIC_KEY }} ${{ secrets.PM2_PRIVATE_KEY }}

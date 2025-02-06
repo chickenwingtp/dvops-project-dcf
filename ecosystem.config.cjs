@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'dcf-backend',
+    name: `dcf-backend-${process.env.NODE_ENV || 'production'}`,
     script: './index.ts',
     interpreter: 'node',
     interpreter_args: '--import tsx',
@@ -19,10 +19,15 @@ module.exports = {
     instances: 1,
     merge_logs: true,
     post_update: ["npm install"],
-    monitoring: true,
+    monitoring: {
+      transaction: true,
+      http: true,
+      custom_probes: true,
+    },
     instance_var: 'INSTANCE_ID',
     pmx: true,
     trace: true,
-    deep_monitoring: true
+    deep_monitoring: true,
+    pm2_plus: true
   }]
 }
