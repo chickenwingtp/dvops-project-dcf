@@ -1,4 +1,9 @@
 import winston from 'winston';
+
+declare global {
+	var logger: winston.Logger;
+}
+
 const logger = winston.createLogger({
 level: 'info',
 format: winston.format.combine(
@@ -11,4 +16,6 @@ new winston.transports.File({ filename: 'error.log', level: 'error' }),
 new winston.transports.File({ filename: 'combined.log' }),
 ],
 });
-module.exports = logger;
+
+global.logger = logger;
+export default logger;
