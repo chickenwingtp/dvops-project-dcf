@@ -9,12 +9,18 @@ module.exports = {
     env: {
       NODE_ENV: 'development',
       PORT: 3000,
-      NODE_NO_WARNINGS: '1'
+      NODE_NO_WARNINGS: '1',
+      PM2_PUBLIC_KEY: process.env.PM2_PUBLIC_KEY,
+      PM2_PRIVATE_KEY: process.env.PM2_PRIVATE_KEY,
+      PM2_MACHINE_NAME: process.env.PM2_MACHINE_NAME
     },
     env_production: {
       NODE_ENV: 'production',
       PORT: 3000,
-      NODE_NO_WARNINGS: '1'
+      NODE_NO_WARNINGS: '1',
+      PM2_PUBLIC_KEY: process.env.PM2_PUBLIC_KEY,
+      PM2_PRIVATE_KEY: process.env.PM2_PRIVATE_KEY,
+      PM2_MACHINE_NAME: process.env.PM2_MACHINE_NAME
     },
     instances: 1,
     merge_logs: true,
@@ -28,7 +34,12 @@ module.exports = {
     pmx: true,
     trace: true,
     deep_monitoring: true,
-    pm2_plus: true,
+    pm2_plus: {
+      retry_timeout: 10000,
+      retry_attempts: 5
+    },
+    automation: false,
+    increment_var: 'PM2_INSTANCE_ID',
     wait_ready: true,
     listen_timeout: 3000,
     kill_timeout: 5000,
