@@ -21,5 +21,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3000/status || exit 1
 
-# Update CMD to include PM2 plus connection
-CMD ["sh", "-c", "PM2_PUBLIC_KEY=$PM2_PUBLIC_KEY PM2_PRIVATE_KEY=$PM2_PRIVATE_KEY pm2-runtime start ecosystem.config.cjs"]
+# Update CMD to properly link PM2 and start the application
+CMD ["sh", "-c", "pm2 link ${PM2_PUBLIC_KEY} ${PM2_PRIVATE_KEY} && pm2-runtime start ecosystem.config.cjs"]

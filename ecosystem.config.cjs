@@ -28,6 +28,11 @@ module.exports = {
     pmx: true,
     trace: true,
     deep_monitoring: true,
-    pm2_plus: true
+    pm2_plus: true,
+    wait_ready: true,
+    listen_timeout: 3000,
+    kill_timeout: 5000,
+    max_restarts: 10,
+    min_uptime: "30s"
   }]
 }
