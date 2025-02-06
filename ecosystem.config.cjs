@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'dcf-backend',
+    name: process.env.PM2_MACHINE_NAME || 'dcf-backend',
     script: './index.ts',
     interpreter: 'tsx',
     exec_mode: 'fork',
