@@ -9,13 +9,13 @@ import { chenxinRouter } from "./util/chenxin_dcf_backend"
 import { db } from "./util/db"
 import { oceanRouter } from "./util/ocean_dcf_backend"
 import { gameRouter } from "./util/raphael_dcf_backend"
-import { logger } from "./logger"
 
 const app = express()
 
 app.use(express.static("public"))
 app.use(express.json())
 
+import logger from './logger'
 import statusMonitor from 'express-status-monitor'
 app.use(statusMonitor());
 
