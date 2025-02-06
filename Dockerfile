@@ -13,6 +13,9 @@ ARG PM2_PRIVATE_KEY
 ENV PM2_PUBLIC_KEY=${PM2_PUBLIC_KEY}
 ENV PM2_PRIVATE_KEY=${PM2_PRIVATE_KEY}
 
+# Set machine name for PM2
+ENV PM2_MACHINE_NAME="dcf-backend-container"
+
 RUN npm run build
 
 EXPOSE 3000
@@ -21,5 +24,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:3000/status || exit 1
 
-# Update CMD to properly link PM2 and start the application
-CMD ["sh", "-c", "pm2 link ${PM2_PUBLIC_KEY} ${PM2_PRIVATE_KEY} && pm2-runtime start ecosystem.config.cjs"]
+# Update CMD to use correct PM2 linking order
+CMD ["sh", "-c", "pm2 link ${PM2_PRIVATE_KEY} ${PM2_PUBLIC_KEY} && pm2-runtime start ecosystem.config.cjs"]
