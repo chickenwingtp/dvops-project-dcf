@@ -116,6 +116,6 @@ app.use(chenxinRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`)
-  logger.info(`Project at: http://34.142.226.251/:${process.env.PORT}!`);
+  logger.info(`Project at: http://localhost:${process.env.PORT}/status`);
 logger.error(`Example or error log`)
 });
