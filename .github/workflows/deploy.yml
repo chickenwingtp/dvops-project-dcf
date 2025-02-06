@@ -38,9 +38,7 @@ jobs:
       - name: Verify PM2 Connection
         run: |
           docker run --rm \
-            -e PM2_PUBLIC_KEY=${{ secrets.PM2_PUBLIC_KEY }} \
-            -e PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }} \
+            -e PM2_PUBLIC_KEY=q2pwmmbba6wgs9k \
+            -e PM2_PRIVATE_KEY=fo46q2hqe29noqy \
             ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest \
-            pm2 link ${{ secrets.PM2_PUBLIC_KEY }} ${{ secrets.PM2_PRIVATE_KEY }}
-
-#test
+            sh -c "pm2 link"
