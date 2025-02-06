@@ -37,34 +37,14 @@ jobs:
             PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }}
       - name: Verify PM2 Connection
         run: |
-          # Start container with debug mode
           docker run -d --name pm2-app \
-            --env PM2_PUBLIC_KEY=${{ secrets.PM2_PUBLIC_KEY }} \
-            --env PM2_PRIVATE_KEY=${{ secrets.PM2_PRIVATE_KEY }} \
-            --env PM2_MACHINE_NAME=github-actions-${{ github.run_id }} \
-            --env DEBUG="*" \
             ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest
           
-          # Give more time for PM2 to initialize
-          sleep 30
-          
-          # Debug checks
-          echo "Checking environment variables..."
-          docker exec pm2-app env | grep PM2
-          
-          echo "Checking PM2 home directory..."
-          docker exec pm2-app ls -la /root/.pm2
-          
-          echo "Checking PM2 status..."
-          docker exec pm2-app pm2 list
-          
-          echo "Container logs..."
+          sleep 10
           docker logs pm2-app
 
       - name: Handle deployment failure
         if: failure()
         run: |
-          echo "Checking final container state..."
-          docker inspect pm2-app || true
           docker logs pm2-app || true
           docker rm -f pm2-app || true
