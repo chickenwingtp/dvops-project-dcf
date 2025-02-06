@@ -9,14 +9,36 @@ import { chenxinRouter } from "./util/chenxin_dcf_backend"
 import { db } from "./util/db"
 import { oceanRouter } from "./util/ocean_dcf_backend"
 import { gameRouter } from "./util/raphael_dcf_backend"
+import statusMonitor from 'express-status-monitor'
 
 const app = express()
 
+// Configure status monitor with PM2 integration
+app.use(statusMonitor({
+  title: 'DCF Resource Monitor',
+  path: '/status',
+  spans: [{
+    interval: 1,
+    retention: 60
+  }],
+  chartVisibility: {
+    cpu: true,
+    mem: true,
+    load: true,
+    responseTime: true,
+    rps: true,
+    statusCodes: true
+  },
+  healthChecks: [{
+    protocol: 'http',
+    host: 'localhost',
+    path: '/',
+    port: '3000'
+  }]
+}));
+
 app.use(express.static("public"))
 app.use(express.json())
-
-import statusMonitor from 'express-status-monitor'
-app.use(statusMonitor());
 
 app.get("/", (req, res) => {
   res.send("Hello, World")
