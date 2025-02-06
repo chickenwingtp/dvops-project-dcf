@@ -15,31 +15,23 @@ const app = express()
 app.use(express.static("public"))
 app.use(express.json())
 
-import logger from './logger'
 import statusMonitor from 'express-status-monitor'
 app.use(statusMonitor({
-  title: 'Server Status', // Optional title
+  title: 'Express Status',
   path: '/status',
   spans: [{
-    interval: 1,     // Every second
-    retention: 60    // Keep 60 datapoints in memory
-  }, {
-    interval: 5,     // Every 5 seconds
+    interval: 1,
     retention: 60
   }],
-  chartVisibility: {
-    cpu: true,
-    mem: true,
-    load: true,
-    responseTime: true,
-    rps: true,
-    statusCodes: true
-  },
+  websocket: true,
+  port: process.env.PORT || 3000,
+  pageTitle: 'Express Status Monitor',
+  ignoreStartsWith: '/public',
   healthChecks: [{
     protocol: 'http',
-    host: '34.142.226.251',
+    host: '0.0.0.0',
     path: '/',
-    port: '3000'
+    port: process.env.PORT || 3000
   }]
 }));
 
@@ -140,6 +132,4 @@ app.use(chenxinRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`)
-  logger.info(`Project at: http://34.142.226.251:${process.env.PORT}`);
-logger.error(`Example or error log`)
 });
