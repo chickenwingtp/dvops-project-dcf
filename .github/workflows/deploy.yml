@@ -29,3 +29,8 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/dvops-project-dcf:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            PORT=3000
+          labels: |
+            org.opencontainers.image.description=DCF Backend with Resource Monitoring
+            org.opencontainers.image.url=http://34.142.226.251:3000/status

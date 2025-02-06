@@ -9,31 +9,48 @@ import { chenxinRouter } from "./util/chenxin_dcf_backend"
 import { db } from "./util/db"
 import { oceanRouter } from "./util/ocean_dcf_backend"
 import { gameRouter } from "./util/raphael_dcf_backend"
+import statusMonitor from 'express-status-monitor'
 
 const app = express()
 
+// Add status monitor before other middleware
+app.use(statusMonitor({
+  title: 'DCF Resource Monitor',
+  path: '/status',
+  spans: [
+    {
+      interval: 1,     // Every second
+      retention: 60    // Keep 60 data points
+    },
+    {
+      interval: 5,     // Every 5 seconds
+      retention: 60    // Keep 60 data points
+    },
+    {
+      interval: 15,    // Every 15 seconds
+      retention: 60    // Keep 60 data points
+    }
+  ],
+  chartVisibility: {
+    cpu: true,
+    mem: true,
+    load: true,
+    responseTime: true,
+    rps: true,
+    statusCodes: true
+  },
+  healthChecks: [
+    {
+      protocol: 'http',
+      host: '0.0.0.0',
+      path: '/',
+      port: process.env.PORT || '3000'
+    }
+  ]
+}));
+
 app.use(express.static("public"))
 app.use(express.json())
-
-import statusMonitor from 'express-status-monitor'
-app.use(statusMonitor({
-  title: 'Express Status',
-  path: '/status',
-  spans: [{
-    interval: 1,
-    retention: 60
-  }],
-  websocket: true,
-  port: process.env.PORT || 3000,
-  pageTitle: 'Express Status Monitor',
-  ignoreStartsWith: '/public',
-  healthChecks: [{
-    protocol: 'http',
-    host: '0.0.0.0',
-    path: '/',
-    port: process.env.PORT || 3000
-  }]
-}));
 
 app.get("/", (req, res) => {
   res.send("Hello, World")
